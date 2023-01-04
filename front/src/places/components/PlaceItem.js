@@ -1,43 +1,43 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext } from "react";
 
-import Card from "../../shared/components/UIElements/Card"
-import Button from "../../shared/components/FormElements/Button"
-import Modal from "../../shared/components/UIElements/Modal"
-import Map from "../../shared/components/UIElements/Map"
-import { AuthContext } from "../../shared/context/auth-context"
-import "./PlaceItem.css"
-import { useHttpClient } from "../../shared/hooks/http-hook"
-import ErrorModal from "../../shared/components/UIElements/ErrorModal"
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner"
+import Card from "../../shared/components/UIElements/Card";
+import Button from "../../shared/components/FormElements/Button";
+import Modal from "../../shared/components/UIElements/Modal";
+import Map from "../../shared/components/UIElements/Map";
+import { AuthContext } from "../../shared/context/auth-context";
+import "./PlaceItem.css";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const PlaceItem = (props) => {
-  const { isLoading, error, sendRequest, clearError } = useHttpClient()
-  const auth = useContext(AuthContext)
-  const [showMap, setShowMap] = useState(false)
-  const [showConfirmModal, setShowConfirmModal] = useState(false)
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const auth = useContext(AuthContext);
+  const [showMap, setShowMap] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-  const openMapHandler = () => setShowMap(true)
+  const openMapHandler = () => setShowMap(true);
 
-  const closeMapHandler = () => setShowMap(false)
+  const closeMapHandler = () => setShowMap(false);
 
   const showDeleteWarningHandler = () => {
-    setShowConfirmModal(true)
-  }
+    setShowConfirmModal(true);
+  };
 
   const cancelDeleteHandler = () => {
-    setShowConfirmModal(false)
-  }
+    setShowConfirmModal(false);
+  };
 
   const confirmDeleteHandler = async () => {
-    setShowConfirmModal(false)
+    setShowConfirmModal(false);
     try {
       await sendRequest(
         `http://ec2-52-78-238-204.ap-northeast-2.compute.amazonaws.com/places/${props.id}`,
         "DELETE"
-      )
-      props.onDelete(props.id)
+      );
+      props.onDelete(props.id);
     } catch (error) {}
-  }
+  };
 
   return (
     <React.Fragment>
@@ -103,7 +103,7 @@ const PlaceItem = (props) => {
         </Card>
       </li>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default PlaceItem
+export default PlaceItem;

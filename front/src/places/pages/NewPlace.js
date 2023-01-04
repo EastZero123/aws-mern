@@ -1,22 +1,22 @@
-import React, { useContext } from "react"
+import React, { useContext } from "react";
 
-import Input from "../../shared/components/FormElements/Input"
-import Button from "../../shared/components/FormElements/Button"
+import Input from "../../shared/components/FormElements/Input";
+import Button from "../../shared/components/FormElements/Button";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
-} from "../../shared/util/validators"
-import { useForm } from "../../shared/hooks/form-hook"
-import "./PlaceForm.css"
-import { useHttpClient } from "../../shared/hooks/http-hook"
-import { AuthContext } from "../../shared/context/auth-context"
-import ErrorModal from "../../shared/components/UIElements/ErrorModal"
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner"
-import { useHistory } from "react-router-dom"
+} from "../../shared/util/validators";
+import { useForm } from "../../shared/hooks/form-hook";
+import "./PlaceForm.css";
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import { AuthContext } from "../../shared/context/auth-context";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import { useHistory } from "react-router-dom";
 
 const NewPlace = () => {
-  const auth = useContext(AuthContext)
-  const { isLoading, error, sendRequest, clearError } = useHttpClient()
+  const auth = useContext(AuthContext);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [formState, inputHandler] = useForm(
     {
       title: {
@@ -33,12 +33,12 @@ const NewPlace = () => {
       },
     },
     false
-  )
+  );
 
-  const history = useHistory()
+  const history = useHistory();
 
   const placeSubmitHandler = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
     try {
       await sendRequest(
         "http://ec2-52-78-238-204.ap-northeast-2.compute.amazonaws.com/api/places",
@@ -50,10 +50,10 @@ const NewPlace = () => {
           creator: auth.userId,
         }),
         { "Content-Type": "application/json" }
-      )
-      history.push("/")
+      );
+      history.push("/");
     } catch (error) {}
-  }
+  };
 
   return (
     <React.Fragment>
@@ -64,33 +64,33 @@ const NewPlace = () => {
           id="title"
           element="input"
           type="text"
-          label="Title"
+          label="제목"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid title."
+          errorText="제목을 제대로 입력해주세요"
           onInput={inputHandler}
         />
         <Input
           id="description"
           element="textarea"
-          label="Description"
+          label="부연설명"
           validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText="Please enter a valid description (at least 5 characters)."
+          errorText="설명을 제대로 작성해주세요(5자 이상 필수)"
           onInput={inputHandler}
         />
         <Input
           id="address"
           element="input"
-          label="Address"
+          label="주소"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid address."
+          errorText="주소를 제대로 입력해주세요"
           onInput={inputHandler}
         />
         <Button type="submit" disabled={!formState.isValid}>
-          ADD PLACE
+          장소 추가
         </Button>
       </form>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default NewPlace
+export default NewPlace;
