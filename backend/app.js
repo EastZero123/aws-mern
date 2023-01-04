@@ -45,7 +45,7 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    app.listen(5000)
+    app.listen(80)
   })
   .catch((err) => {
     console.log(err)
