@@ -74,7 +74,7 @@ const Auth = () => {
             "Content-Type": "application/json",
           }
         )
-        auth.login(responseData.user.id)
+        auth.login(responseData.user._id)
       } catch (err) {}
     } else {
       try {
@@ -91,7 +91,7 @@ const Auth = () => {
           }
         )
 
-        auth.login(responseData.user.id)
+        auth.login(responseData.user._id)
       } catch (err) {}
     }
   }
