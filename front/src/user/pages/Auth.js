@@ -101,7 +101,7 @@ const Auth = () => {
       <ErrorModal error={error} onClear={clearError} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
-        <h2>Login Required</h2>
+        <h2>로그인이 필요합니다</h2>
         <hr />
         <form onSubmit={authSubmitHandler}>
           {!isLoginMode && (
@@ -111,7 +111,7 @@ const Auth = () => {
               type="text"
               label="닉네임"
               validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please enter a name."
+              errorText="이름을 작성해주세요"
               onInput={inputHandler}
             />
           )}
@@ -121,7 +121,7 @@ const Auth = () => {
             type="email"
             label="이메일"
             validators={[VALIDATOR_EMAIL()]}
-            errorText="Please enter a valid email address."
+            errorText="이메일 형식으로 작성해주세요"
             onInput={inputHandler}
           />
           <Input
@@ -130,7 +130,7 @@ const Auth = () => {
             type="password"
             label="패스워드"
             validators={[VALIDATOR_MINLENGTH(6)]}
-            errorText="Please enter a valid password, at least 5 characters."
+            errorText="비밀번호를 작성해주세요(최소 6자 이상 필수)"
             onInput={inputHandler}
           />
           <Button type="submit" disabled={!formState.isValid}>
