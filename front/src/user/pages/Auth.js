@@ -138,7 +138,7 @@ const Auth = () => {
           </Button>
         </form>
         <Button inverse onClick={switchModeHandler}>
-          {isLoginMode ? "회원가입" : "로그인"} 으로 전환
+          {isLoginMode ? "회원가입" : "로그인"}으로 전환
         </Button>
       </Card>
     </React.Fragment>
