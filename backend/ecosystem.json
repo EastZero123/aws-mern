@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "name": "aws-mern",
+      "script": "npm",
+      "args": "start",
+      "watch": true
+    }
+  ]
+}
