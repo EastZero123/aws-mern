@@ -64,7 +64,7 @@ const Auth = () => {
     if (isLoginMode) {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/login",
+          "http://ec2-52-78-238-204.ap-northeast-2.compute.amazonaws.com/api/users/login",
           "POST",
           JSON.stringify({
             email: formState.inputs.email.value,
@@ -79,7 +79,7 @@ const Auth = () => {
     } else {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/signup",
+          "http://ec2-52-78-238-204.ap-northeast-2.compute.amazonaws.com/api/users/signup",
           "POST",
           JSON.stringify({
             name: formState.inputs.name.value,

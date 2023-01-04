@@ -32,7 +32,7 @@ const PlaceItem = (props) => {
     setShowConfirmModal(false)
     try {
       await sendRequest(
-        `http://localhost:5000/api/places/${props.id}`,
+        `http://ec2-52-78-238-204.ap-northeast-2.compute.amazonaws.com/places/${props.id}`,
         "DELETE"
       )
       props.onDelete(props.id)

@@ -40,7 +40,7 @@ const UpdatePlace = () => {
     const fetchPlace = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/places`
+          `http://ec2-52-78-238-204.ap-northeast-2.compute.amazonaws.com/api/places`
         )
         setLoadedPlace(responseData.place)
         setFormData(
@@ -65,7 +65,7 @@ const UpdatePlace = () => {
     event.preventDefault()
     try {
       sendRequest(
-        `http://localhost:5000/api/places/${placeId}`,
+        `http://ec2-52-78-238-204.ap-northeast-2.compute.amazonaws.com/api/places/${placeId}`,
         "PATCH",
         JSON.stringify({
           title: formState.inputs.title.value,
