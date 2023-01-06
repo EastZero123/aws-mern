@@ -1,24 +1,25 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from "react"
 
-import Card from "../../shared/components/UIElements/Card";
-import Input from "../../shared/components/FormElements/Input";
-import Button from "../../shared/components/FormElements/Button";
-import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import Card from "../../shared/components/UIElements/Card"
+import Input from "../../shared/components/FormElements/Input"
+import Button from "../../shared/components/FormElements/Button"
+import ErrorModal from "../../shared/components/UIElements/ErrorModal"
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner"
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
-} from "../../shared/util/validators";
-import { useForm } from "../../shared/hooks/form-hook";
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import { AuthContext } from "../../shared/context/auth-context";
-import "./Auth.css";
+} from "../../shared/util/validators"
+import { useForm } from "../../shared/hooks/form-hook"
+import { useHttpClient } from "../../shared/hooks/http-hook"
+import { AuthContext } from "../../shared/context/auth-context"
+import "./Auth.css"
+import ImageUpload from "../../shared/components/FormElements/ImageUpload"
 
 const Auth = () => {
-  const auth = useContext(AuthContext);
-  const [isLoginMode, setIsLoginMode] = useState(true);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const auth = useContext(AuthContext)
+  const [isLoginMode, setIsLoginMode] = useState(true)
+  const { isLoading, error, sendRequest, clearError } = useHttpClient()
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -32,7 +33,7 @@ const Auth = () => {
       },
     },
     false
-  );
+  )
 
   const switchModeHandler = () => {
     if (!isLoginMode) {
@@ -40,9 +41,10 @@ const Auth = () => {
         {
           ...formState.inputs,
           name: undefined,
+          image: undefined,
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
-      );
+      )
     } else {
       setFormData(
         {
@@ -51,15 +53,19 @@ const Auth = () => {
             value: "",
             isValid: false,
           },
+          image: {
+            value: null,
+            isValid: false,
+          },
         },
         false
-      );
+      )
     }
-    setIsLoginMode((prevMode) => !prevMode);
-  };
+    setIsLoginMode((prevMode) => !prevMode)
+  }
 
   const authSubmitHandler = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     if (isLoginMode) {
       try {
@@ -73,28 +79,26 @@ const Auth = () => {
           {
             "Content-Type": "application/json",
           }
-        );
-        auth.login(responseData.user._id);
+        )
+        auth.login(responseData.user._id)
       } catch (err) {}
     } else {
       try {
+        const formData = new FormData()
+        formData.append("email", formState.inputs.email.value)
+        formData.append("name", formState.inputs.name.value)
+        formData.append("password", formState.inputs.password.value)
+        formData.append("image", formState.inputs.image.value)
         const responseData = await sendRequest(
           "http://ec2-52-78-238-204.ap-northeast-2.compute.amazonaws.com/api/users/signup",
           "POST",
-          JSON.stringify({
-            name: formState.inputs.name.value,
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          }),
-          {
-            "Content-Type": "application/json",
-          }
-        );
+          formData
+        )
 
-        auth.login(responseData.user._id);
+        auth.login(responseData.user._id)
       } catch (err) {}
     }
-  };
+  }
 
   return (
     <React.Fragment>
@@ -113,6 +117,14 @@ const Auth = () => {
               validators={[VALIDATOR_REQUIRE()]}
               errorText="이름을 작성해주세요"
               onInput={inputHandler}
+            />
+          )}
+          {!isLoginMode && (
+            <ImageUpload
+              center
+              id="image"
+              onInput={inputHandler}
+              errorText="이미지를 넣어주세요"
             />
           )}
           <Input
@@ -142,7 +154,7 @@ const Auth = () => {
         </Button>
       </Card>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default Auth;
+export default Auth

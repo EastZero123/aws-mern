@@ -1,22 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext } from "react"
 
-import Input from "../../shared/components/FormElements/Input";
-import Button from "../../shared/components/FormElements/Button";
+import Input from "../../shared/components/FormElements/Input"
+import Button from "../../shared/components/FormElements/Button"
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
-} from "../../shared/util/validators";
-import { useForm } from "../../shared/hooks/form-hook";
-import "./PlaceForm.css";
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import { AuthContext } from "../../shared/context/auth-context";
-import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import { useHistory } from "react-router-dom";
+} from "../../shared/util/validators"
+import { useForm } from "../../shared/hooks/form-hook"
+import "./PlaceForm.css"
+import { useHttpClient } from "../../shared/hooks/http-hook"
+import { AuthContext } from "../../shared/context/auth-context"
+import ErrorModal from "../../shared/components/UIElements/ErrorModal"
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner"
+import { useHistory } from "react-router-dom"
+import ImageUpload from "../../shared/components/FormElements/ImageUpload"
 
 const NewPlace = () => {
-  const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const auth = useContext(AuthContext)
+  const { isLoading, error, sendRequest, clearError } = useHttpClient()
   const [formState, inputHandler] = useForm(
     {
       title: {
@@ -31,29 +32,33 @@ const NewPlace = () => {
         value: "",
         isValid: false,
       },
+      image: {
+        value: null,
+        isValid: false,
+      },
     },
     false
-  );
+  )
 
-  const history = useHistory();
+  const history = useHistory()
 
   const placeSubmitHandler = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
+      const formData = new FormData()
+      formData.append("title", formState.inputs.title.value)
+      formData.append("description", formState.inputs.description.value)
+      formData.append("address", formState.inputs.address.value)
+      formData.append("creator", auth.userId)
+      formData.append("image", formState.inputs.image.value)
       await sendRequest(
         "http://ec2-52-78-238-204.ap-northeast-2.compute.amazonaws.com/api/places",
         "POST",
-        JSON.stringify({
-          title: formState.inputs.title.value,
-          description: formState.inputs.description.value,
-          address: formState.inputs.address.value,
-          creator: auth.userId,
-        }),
-        { "Content-Type": "application/json" }
-      );
-      history.push("/");
+        formData
+      )
+      history.push("/")
     } catch (error) {}
-  };
+  }
 
   return (
     <React.Fragment>
@@ -85,12 +90,17 @@ const NewPlace = () => {
           errorText="주소를 제대로 입력해주세요"
           onInput={inputHandler}
         />
+        <ImageUpload
+          id="image"
+          onInput={inputHandler}
+          errorText="이미지를 넣어주세요"
+        />
         <Button type="submit" disabled={!formState.isValid}>
           장소 추가
         </Button>
       </form>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default NewPlace;
+export default NewPlace
