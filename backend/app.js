@@ -7,10 +7,16 @@ const mongoose = require("mongoose")
 const placesRoutes = require("./routes/places-routes")
 const usersRoutes = require("./routes/users-routes")
 const HttpError = require("./models/http-error")
+require("dotenv").config()
 
 const app = express()
 
 app.use(bodyParser.json())
+
+app.use(express.static(path.join(__dirname, "../front/build")))
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../front/build", "index.html"))
+})
 
 app.use("/uploads/images", express.static(path.join("uploads", "images")))
 
