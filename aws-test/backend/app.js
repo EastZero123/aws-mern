@@ -1,5 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+
+const Adminrouter = require("./routes/admin-routes");
 
 // require("dotenv").config()
 
@@ -21,6 +24,8 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
   next();
 });
+
+app.use("/admin", Adminrouter);
 
 mongoose
   .connect(

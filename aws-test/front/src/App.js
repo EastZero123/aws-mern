@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import About from "./about/About";
+import AddAdmin from "./Admin/AddAdmin";
 import Admin from "./Admin/Admin";
 import "./App.css";
 import Main from "./home/Main";
@@ -17,6 +18,9 @@ function App() {
           </Route>
           <Route path="/admin">
             <Admin />
+          </Route>
+          <Route path="/admin/create">
+            <AddAdmin />
           </Route>
           <Route path="/about" exact>
             <About />

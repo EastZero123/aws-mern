@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
 import Button from "../shared/UI/Button";
 
-import "./Admin.css";
+import "./AddAdmin.css";
 
-const Admin = () => {
+const AddAdmin = () => {
   let refTitle = useRef();
   let refNation = useRef();
   let refDate = useRef();
@@ -55,4 +55,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default AddAdmin;
