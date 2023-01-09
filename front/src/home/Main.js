@@ -33,7 +33,7 @@ const Main = () => {
 
   useEffect(() => {
     const fetchdata = async () => {
-      const res = await fetch(`${process.env.REACT_APP_URL}/admin`)
+      const res = await fetch(`${process.env.REACT_APP_URL}:5000/admin/`)
       const resData = await res.json()
       setDate(resData.sports)
     }

@@ -1,6 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
+const path = require("path")
 
 const Adminrouter = require("./routes/admin-routes")
 require("dotenv").config()
@@ -31,7 +32,7 @@ app.use("/admin", Adminrouter)
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    app.listen(80)
+    app.listen(5000)
   })
   .catch((err) => {
     console.log(err)

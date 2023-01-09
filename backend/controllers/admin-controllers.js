@@ -1,6 +1,8 @@
 const mongoose = require("mongoose")
 const Sport = require("../models/sport")
 const HttpError = require("../models/http-error")
+const path = require("path")
+require("dotenv").config({ path: path.join(__dirname, ".env") })
 
 const getSport = async (req, res, next) => {
   let sports
