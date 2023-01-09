@@ -7,6 +7,7 @@ import "react-calendar/dist/Calendar.css"
 import SportList from "./SportList"
 
 const Main = () => {
+  console.log(process.env.REACT_APP_URL)
   var dateArr = []
   const [dates, setDate] = useState()
   const [value, setValue] = useState(new Date())
@@ -35,6 +36,7 @@ const Main = () => {
     const fetchdata = async () => {
       const res = await fetch(`${process.env.REACT_APP_URL}/admin`)
       const resData = await res.json()
+      console.log(resData)
       setDate(resData.sports)
     }
     fetchdata()
