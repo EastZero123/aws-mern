@@ -11,10 +11,10 @@ const app = express()
 
 app.use(bodyParser.json())
 
-// app.use(express.static(path.join(__dirname, "../front/build")))
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../front/build", "index.html"))
-// })
+app.use(express.static(path.join(__dirname, "../front/build")))
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../front/build", "index.html"))
+})
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*")
@@ -31,7 +31,7 @@ app.use("/admin", Adminrouter)
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    app.listen(5000)
+    app.listen(80)
   })
   .catch((err) => {
     console.log(err)
