@@ -1,11 +1,11 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import About from "./about/About";
-import AddAdmin from "./Admin/AddAdmin";
-import Admin from "./Admin/Admin";
-import "./App.css";
-import Main from "./home/Main";
-import Header from "./shared/UI/Header";
-import Nav from "./shared/UI/Nav";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import About from "./about/About"
+import AddAdmin from "./Admin/AddAdmin"
+import Admin from "./Admin/Admin"
+import "./App.css"
+import Main from "./home/Main"
+import Header from "./shared/UI/Header"
+import Nav from "./shared/UI/Nav"
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
           <Route path="/" exact>
             <Main />
           </Route>
-          <Route path="/admin">
+          <Route path="/admin" exact>
             <Admin />
           </Route>
           <Route path="/admin/create">
@@ -28,7 +28,7 @@ function App() {
         </Switch>
       </Router>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

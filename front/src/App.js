@@ -1,84 +1,33 @@
-import React, { useState, useCallback } from "react"
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import About from "./about/About"
+import AddAdmin from "./Admin/AddAdmin"
+import Admin from "./Admin/Admin"
+import "./App.css"
+import Main from "./home/Main"
+import Header from "./shared/UI/Header"
+import Nav from "./shared/UI/Nav"
 
-import Users from "./user/pages/Users"
-import NewPlace from "./places/pages/NewPlace"
-import UserPlaces from "./places/pages/UserPlaces"
-import UpdatePlace from "./places/pages/UpdatePlace"
-import Auth from "./user/pages/Auth"
-import MainNavigation from "./shared/components/Navigation/MainNavigation"
-import { AuthContext } from "./shared/context/auth-context"
-
-const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [userId, setUserId] = useState(false)
-
-  const login = useCallback((uid) => {
-    setIsLoggedIn(true)
-    setUserId(uid)
-  }, [])
-
-  const logout = useCallback(() => {
-    setIsLoggedIn(false)
-    setUserId(null)
-  }, [])
-
-  let routes
-
-  if (isLoggedIn) {
-    routes = (
-      <Switch>
-        <Route path="/" exact>
-          <Users />
-        </Route>
-        <Route path="/:userId/places" exact>
-          <UserPlaces />
-        </Route>
-        <Route path="/places/new" exact>
-          <NewPlace />
-        </Route>
-        <Route path="/places/:placeId">
-          <UpdatePlace />
-        </Route>
-        <Redirect to="/" />
-      </Switch>
-    )
-  } else {
-    routes = (
-      <Switch>
-        <Route path="/" exact>
-          <Users />
-        </Route>
-        <Route path="/:userId/places" exact>
-          <UserPlaces />
-        </Route>
-        <Route path="/auth">
-          <Auth />
-        </Route>
-        <Redirect to="/auth" />
-      </Switch>
-    )
-  }
-
+function App() {
   return (
-    <AuthContext.Provider
-      value={{
-        isLoggedIn: isLoggedIn,
-        userId: userId,
-        login: login,
-        logout: logout,
-      }}
-    >
+    <div>
       <Router>
-        <MainNavigation />
-        <main>{routes}</main>
+        <Nav />
+        <Switch>
+          <Route path="/" exact>
+            <Main />
+          </Route>
+          <Route path="/admin" exact>
+            <Admin />
+          </Route>
+          <Route path="/admin/create">
+            <AddAdmin />
+          </Route>
+          <Route path="/about" exact>
+            <About />
+          </Route>
+        </Switch>
       </Router>
-    </AuthContext.Provider>
+    </div>
   )
 }
 

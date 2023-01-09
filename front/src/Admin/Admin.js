@@ -1,38 +1,36 @@
-import React, { useRef } from "react"
-import Button from "../shared/UI/Button"
+import React, { useRef } from "react";
+import Button from "../shared/UI/Button";
 
-import "./AddAdmin.css"
+import "./Admin.css";
 
-const AddAdmin = () => {
-  let refTitle = useRef()
-  let refNation = useRef()
-  let refDate = useRef()
-  let refHometeam = useRef()
-  let refAwayteam = useRef()
+const Admin = () => {
+  let refTitle = useRef();
+  let refNation = useRef();
+  let refDate = useRef();
+  let refHometeam = useRef();
+  let refAwayteam = useRef();
 
   const SubmitHandler = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     const jsondata = {
       title: refTitle.current.value,
       nation: refNation.current.value,
-      date: refDate.current.value.toLocaleString(),
+      date: refDate.current.value,
       hometeam: refHometeam.current.value,
       awayteam: refAwayteam.current.value,
-    }
-
-    console.log(jsondata.date)
+    };
 
     try {
-      await fetch(`${process.env.REACT_APP_URL}/admin/create`, {
+      await fetch("http://localhost:5000/admin/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(jsondata),
-      }).then((response) => console.log(response.json()))
+      }).then((response) => console.log(response.json()));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <React.Fragment>
@@ -44,7 +42,7 @@ const AddAdmin = () => {
             <label>nation</label>
             <input type="text" label="nation" ref={refNation} />
             <label>date</label>
-            <input type="date" label="date" ref={refDate} />
+            <input type="text" label="date" ref={refDate} />
             <label>hometeam</label>
             <input type="text" label="hometeam" ref={refHometeam} />
             <label>awayteam</label>
@@ -54,7 +52,7 @@ const AddAdmin = () => {
         </div>
       </div>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default AddAdmin
+export default Admin;
